@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麻将计算器</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #b0dbed;
+        }
+        
+        .container {
+            width: 85%;
+            height: 52%;
+        }
+        
+        .d-flex {
+            display: flex;
+        }
+        
+        .ft {
+            font-family: "华文行楷", sans-serif;
+            font-size: 48px;
+        }
+        
+        .item {
+            height: 33%;
+            text-align: center;
+        }
+        
+        .w-50 {
+            width: 50%;
+        }
+        
+        .center-text {
+            text-align: center;
+        }
+        
+        .center-block {
+            width: 50%;
+            margin: 0 auto;
+        }
+        
+        .center-flex-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .tl {
+            text-align: left;
+        }
+        
+        .tr {
+            text-align: right;
+        }
+        
+        .mahjong-shadow {
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3), /* 右下阴影 */
+            -6px -6px 10px rgba(255, 255, 255, 0.5), /* 左上高光 */
+            -6px 6px 10px rgba(0, 0, 0, 0.1), /* 左上阴影 */
+            6px -6px 10px rgba(255, 255, 255, 0.3);
+            /* 右下高光 */
+            border-radius: 8px;
+        }
+        
+        .zd {
+            /* margin: 8px; */
+            font-size: 36px;
+        }
+        
+        select {
+            font-size: 24px;
+            background-color: #b0dbed;
+            color: #240202;
+            font-family: "宋体", sans-serif;
+        }
+        
+        .dan-label {
+            color: #b49a2d;
+            border: 4px solid;
+            border-radius: 50%;
+            border-block-color: #d58b28;
+            font-size: 22px;
+            padding: 4px;
+        }
+        
+        .zhuang {
+            border: 4px solid;
+            border-color: red;
+            color: red;
+            /* padding: 2px; */
+            font-size: 20px;
+            padding: 4px;
+        }
+        
+        .none-zhuang {
+            border: 4px solid;
+            border-color: #968f8f;
+            color: #968f8f;
+            /* padding: 2px; */
+            font-size: 20px;
+            padding: 4px;
+        }
+        
+        .calculate {
+            width: 180px;
+            height: 63px;
+            font-size: 38px;
+            display: flex;
+            margin: 20px auto;
+            padding: 3px 50px;
+            background-color: #44ffc0;
+            border-color: #44ffc0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="margin-top: -140px;">
+        <!-- <p>得分计算器</p> -->
+        <div class="item">
+            <div class="ft"><span class="mahjong-shadow">北</span></div>
+            <div class="zd">
+                <span id="zhuangn" class="none-zhuang">庄</span>
+                <span id="diann" class="none-zhuang">点</span>
+                <span id="hun" class="none-zhuang">胡</span>
+                <label class="dan-label" for="dann">蛋</label>
+                <select name="dann" id="dann">
+                </select>
+            </div>
+        </div>
+        <div class="d-flex item">
+            <div class="w-50">
+                <div class="ft tl"><span class="mahjong-shadow">西</span></div>
+                <div class="zd">
+                    <span id="zhuangw" class="none-zhuang">庄</span>
+                    <span id="dianw" class="none-zhuang">点</span>
+                    <span id="huw" class="none-zhuang">胡</span>
+                    <label class="dan-label" for="danw">蛋</label>
+                    <select name="danw" id="danw">
+                    </select>
+                </div>
+            </div>
+            <div class="w-50">
+                <div class="ft tr"><span class="mahjong-shadow">东</span></div>
+                <div class="zd">
+                    <span id="zhuange" class="none-zhuang">庄</span>
+                    <span id="diane" class="none-zhuang">点</span>
+                    <span id="hue" class="none-zhuang">胡</span>
+                    <label class="dan-label" for="dane">蛋</label>
+                    <select name="dane" id="dane">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="margin-top: 40px;">
+            <div class="ft"><span class="mahjong-shadow">南</span></div>
+            <div class="zd">
+                <span id="zhuangs" class="none-zhuang">庄</span>
+                <span id="dians" class="none-zhuang">点</span>
+                <span id="hus" class="none-zhuang">胡</span>
+                <label class="dan-label" for="dans">蛋</label>
+                <select name="dans" id="dans">
+                </select>
+            </div>
+        </div>
+        <div style="font-size: 20px;font-family:宋体;margin-top: 8px;">
+            <label for="rate">倍率（只填胡的倍率）: </label>
+            <select name="rate" id="rate">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="16">16</option>
+                <option value="32">32</option>
+                <option value="64">64</option>
+                <option value="128">128</option>
+                <option value="256">256</option>
+                <option value="512">散伙吧</option>
+            </select>
+        </div>
+        <div class="d-flex" style="font-size: 20px;font-family:宋体;margin-top: 14px;">
+            <label for="nobao">
+                 无宝
+            </label><input id="nobao" type="radio" name="bao" value="nobao" style="margin-left: -8px;height: 22px;    width: 60px;">
+            <label for="mobao">
+                 摸宝
+            </label><input id="mobao" type="radio" name="bao" value="mobao" style="margin-left: -8px;height: 22px;    width: 60px;">
+            <label for="duibao">
+                 对宝
+            </label><input id="duibao" type="radio" name="bao" value="duibao" style="margin-left: -8px;height: 22px;    width: 60px;">
+        </div>
+        <button id="calculate" class="calculate">计算</button>
+    </div>
+
+</body>
+<script>
+    $(document).ready(() => {
+        for (let index = 0; index <= 25; index++) {
+            $('#dann').append(`<option value="${index}">${index}</option>`);
+            $('#dane').append(`<option value="${index}">${index}</option>`);
+            $('#danw').append(`<option value="${index}">${index}</option>`);
+            $('#dans').append(`<option value="${index}">${index}</option>`);
+        }
+
+        $('input[name="bao"]').on('change', function() {
+            var selectedValue = $(this).val();
+            if (selectedValue == "duibao" || selectedValue == "mobao") {
+                $('#dians').addClass("none-zhuang").removeClass("zhuang");
+                $('#diane').addClass("none-zhuang").removeClass("zhuang")
+                $('#diann').addClass("none-zhuang").removeClass("zhuang")
+                $('#dianw').addClass("none-zhuang").removeClass("zhuang")
+                dian = null;
+            }
+        });
+
+        var zhuang, dian, hu;
+        var palyer = ["w", "e", "s", "n"]
+        var zhuangList = ["zhuangn", "zhuange", "zhuangs", "zhuangw"]
+        var dianList = ["diann", "diane", "dians", "dianw"]
+        var huList = ["hun", "hue", "hus", "huw"]
+
+        for (let index = 0; index < palyer.length; index++) {
+            const element = palyer[index];
+            $(`#zhuang${element}`).click(() => {
+                zhuang = switchZhuang(`zhuang${element}`, zhuang, zhuangList)
+            })
+
+            $(`#dian${element}`).click(() => {
+                dian = switchZhuang(`dian${element}`, dian, dianList)
+                $('input[name="bao"][value="nobao"]').prop('checked', true);
+            })
+
+            $(`#hu${element}`).click(() => {
+                hu = switchZhuang(`hu${element}`, hu, huList)
+            })
+        }
+
+        function switchZhuang(z, res, ls) {
+            for (let index = 0; index < ls.length; index++) {
+                const element = ls[index];
+                if (res && res == z && z == element) {
+                    res = null;
+                    $(`#${element}`).addClass("none-zhuang").removeClass("zhuang")
+                } else if (z == element) {
+                    $(`#${element}`).removeClass("none-zhuang").addClass("zhuang")
+                    res = z;
+                } else {
+                    $(`#${element}`).addClass("none-zhuang").removeClass("zhuang")
+                }
+            }
+            return res;
+        }
+
+        function getDan(name) {
+            return parseInt($(`#dan${name}`).val())
+        }
+
+        function getPlayers() {
+            var res = [];
+            var palyerW = {
+                name: "西",
+                dan: getDan('w'),
+                dian: dian == 'dianw',
+                zhuang: zhuang == 'zhuangw',
+                hu: hu == 'huw'
+            }
+            var palyerS = {
+                name: "南",
+                dan: getDan('s'),
+                dian: dian == 'dians',
+                zhuang: zhuang == 'zhuangs',
+                hu: hu == 'hus'
+            }
+            var palyerE = {
+                name: "东",
+                dan: getDan('e'),
+                dian: dian == 'diane',
+                zhuang: zhuang == 'zhuange',
+                hu: hu == 'hue'
+            }
+            var palyerN = {
+                name: "北",
+                dan: getDan('n'),
+                dian: dian == 'diann',
+                zhuang: zhuang == 'zhuangn',
+                hu: hu == 'hun'
+            }
+            res.push(palyerW);
+            res.push(palyerS);
+            res.push(palyerE);
+            res.push(palyerN);
+            return res;
+        }
+
+        $("#calculate").click(() => {
+            var rate = parseInt($("#rate").val());
+            var bao = $('input[name="bao"]:checked').val()
+            if (!zhuang) {
+                alert("选一个庄家！");
+                return;
+            }
+            if (bao != "mobao" && bao != "duibao" && !dian) {
+                alert("摸宝，对宝，点炮必须选一个");
+                return;
+            }
+            if (!hu) {
+                alert("谁胡了?");
+                return;
+            }
+
+            var palyers = getPlayers();
+            //calculate dan
+            var danTotal = 0;
+            for (let index = 0; index < palyers.length; index++) {
+                const element = palyers[index];
+                danTotal += element.dan;
+            }
+            var zimo = dian && hu && dian[dian.length - 1] == hu[hu.length - 1];
+            var zhuangDian = dian && zhuang && dian[dian.length - 1] == zhuang[zhuang.length - 1];
+            var zhuangHu = hu && zhuang && hu[hu.length - 1] == zhuang[zhuang.length - 1];
+            var message = '';
+            for (let index = 0; index < palyers.length; index++) {
+                var element = palyers[index];
+                var sc = rate;
+                var total = element.dan * 3 - (danTotal - element.dan);
+                if (!hu) {
+                    element.score = total;
+                    message += `${element.name} ${total > 0 ? '赢' : '输'} ${Math.abs(total)} 分\n`;
+                } else if (element.hu) {
+                    if (element.zhuang) {
+                        if (bao == "mobao") {
+                            sc = sc * 4 * 3;
+                        } else if (bao == "duibao") {
+                            sc = sc * 8 * 3;
+                        } else if (zimo) {
+                            sc = sc * 2 * 3;
+                        } else {
+                            sc = sc * 4;
+                        }
+                        sc *= 2
+                    } else {
+                        if (bao == "mobao") {
+                            sc = sc * 4 * 4;
+                        } else if (bao == "duibao") {
+                            sc = sc * 8 * 4;
+                        } else if (zimo) {
+                            sc = sc * 2 * 4;
+                        } else if (zhuangDian) {
+                            sc = sc * 6;
+                        } else {
+                            sc = sc * 5;
+                        }
+                    }
+
+                    total += sc;
+                } else {
+                    if (element.zhuang) {
+                        sc *= 2
+                    }
+                    if (bao == "mobao") {
+                        sc *= 4;
+                    } else if (bao == "duibao") {
+                        sc *= 8;
+                    } else if (element.dian) {
+                        sc *= 2;
+                    }
+                    if (zhuangHu) {
+                        sc *= 2;
+                    }
+                    if (zimo) {
+                        sc *= 2;
+                    }
+
+                    total -= sc;
+                }
+                element.score = total;
+                message += `${element.name} ${total > 0 ? '赢' : '输'} ${Math.abs(total)} 分\n`;
+            }
+
+            alert(message);
+        })
+    })
+</script>
+
+</html>
