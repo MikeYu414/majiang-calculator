@@ -15,6 +15,7 @@
             justify-content: center;
             align-items: center;
             background-color: #b0dbed;
+			font-family: cursive !important;
         }
         
         .container {
@@ -27,13 +28,12 @@
         }
         
         .ft {
-            font-family: "华文行楷", sans-serif;
             font-size: 48px;
             position: relative;
         }
         
         .item {
-            height: 33%;
+            height: 28%;
             text-align: center;
         }
         
@@ -72,10 +72,11 @@
             6px -6px 10px rgba(255, 255, 255, 0.3);
             /* 右下高光 */
             border-radius: 8px;
+			padding: 4px;
         }
         
         .zd {
-            /* margin: 8px; */
+            margin-top: 4px;
             font-size: 36px;
         }
         
@@ -83,7 +84,7 @@
             font-size: 24px;
             background-color: #b0dbed;
             color: #240202;
-            font-family: "宋体", sans-serif;
+           
         }
         
         .dan-label {
@@ -102,6 +103,7 @@
             /* padding: 2px; */
             font-size: 20px;
             padding: 4px;
+			border-radius: 10px;
         }
         
         .none-zhuang {
@@ -111,31 +113,39 @@
             /* padding: 2px; */
             font-size: 20px;
             padding: 4px;
+			border-radius: 10px;
         }
         
         .calculate {
-            width: 180px;
-            height: 63px;
-            font-size: 38px;
-            display: flex;
-            margin: 20px auto;
-            padding: 3px 0px 4px 47px;
-            background-color: #44ffc0;
-            border-color: #44ffc0;
+            width: 149px;
+			height: 52px;
+			font-size: 32px;
+			display: flex;
+			margin: 20px auto;
+			padding: 6px 0px 4px 40px;
+			background-color: #44ffc0;
+			border-radius: 13px;
+			border: 2px solid #44ffc0;
+            box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3), /* 右下阴影 */
+            -6px -6px 10px rgba(0, 0, 0, 0.1), /* 左上高光 */
+            -6px 6px 10px rgba(0, 0, 0, 0.1), /* 左上阴影 */
+            6px -6px 10px rgba(0, 0, 0, 0.3);
         }
         
         .win {
             color: #018202;
             position: absolute;
             margin-left: 8px;
-            font-size: 32px;
+			margin-top: 10px;
+            font-size: 28px;
         }
         
         .lose {
             position: absolute;
             color: red;
             margin-left: 8px;
-            font-size: 32px;
+			margin-top: 10px;
+            font-size: 28px;
         }
         
         .reset {
@@ -184,7 +194,7 @@
             </div>
             <div class="w-50">
                 <div class="ft tr">
-                    <span id="resultw" class="win" style="position: relative;"></span>
+                    <span id="resultw" class="win" style="position: relative;top: -10px;"></span>
                     <span class="mahjong-shadow">右</span>
                 </div>
                 <div class="zd">
@@ -210,7 +220,7 @@
                 </select>
             </div>
         </div>
-        <div style="font-size: 20px;font-family:宋体;margin-top: 8px;">
+        <div style="font-size: 20px;margin-top: 8px;">
             <label for="rate">倍率（只填胡的倍率）: </label>
             <select name="rate" id="rate">
                 <option value="1">1</option>
@@ -220,12 +230,12 @@
                 <option value="16">16</option>
                 <option value="32">32</option>
                 <option value="64">64</option>
-                <option value="128">128</option>
-                <option value="256">256</option>
-                <option value="512">散伙吧</option>
+                <!-- <option value="128">128</option> -->
+                <!-- <option value="256">256</option> -->
+                <!-- <option value="512">散伙吧</option> -->
             </select>
         </div>
-        <div class="d-flex" style="font-size: 20px;font-family:宋体;margin-top: 14px;">
+        <div class="d-flex" style="font-size: 20px;margin-top: 14px;">
             <label for="nobao">
                  无宝
             </label><input id="nobao" type="radio" name="bao" value="nobao" style="margin-left: -8px;height: 22px;    width: 60px;">
@@ -237,8 +247,8 @@
             </label><input id="duibao" type="radio" name="bao" value="duibao" style="margin-left: -8px;height: 22px;    width: 60px;">
         </div>
         <div style="position: relative;" class="d-flex">
-            <button id="reset" class="reset">重置</button>
-            <button id="calculate" class="calculate">计算</button>
+            <button id="reset" class="reset" style="font-family: cursive;">重置</button>
+            <button id="calculate" class="calculate" style="font-family: cursive;">计算</button>
         </div>
 
     </div>
@@ -249,7 +259,7 @@
         var zhuang, dian, hu;
         $('input[name="bao"][value="nobao"]').prop('checked', true);
 
-        for (let index = 0; index <= 25; index++) {
+        for (let index = 0; index <= 30; index++) {
             $('#dann').append(`<option value="${index}">${index}</option>`);
             $('#dane').append(`<option value="${index}">${index}</option>`);
             $('#danw').append(`<option value="${index}">${index}</option>`);
