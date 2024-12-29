@@ -29,6 +29,7 @@
         .ft {
             font-family: "华文行楷", sans-serif;
             font-size: 48px;
+            position: relative;
         }
         
         .item {
@@ -118,9 +119,34 @@
             font-size: 38px;
             display: flex;
             margin: 20px auto;
-            padding: 3px 50px;
+            padding: 3px 0px 4px 47px;
             background-color: #44ffc0;
             border-color: #44ffc0;
+        }
+        
+        .win {
+            color: #018202;
+            position: absolute;
+            margin-left: 8px;
+            font-size: 32px;
+        }
+        
+        .lose {
+            position: absolute;
+            color: red;
+            margin-left: 8px;
+            font-size: 32px;
+        }
+        
+        .reset {
+            font-size: 18px;
+            position: absolute;
+            margin-top: 30px;
+            border-radius: 24px;
+            color: red;
+            border-color: red;
+            width: 55px;
+            height: 35px;
         }
     </style>
 </head>
@@ -129,7 +155,10 @@
     <div class="container" style="margin-top: -140px;">
         <!-- <p>得分计算器</p> -->
         <div class="item">
-            <div class="ft"><span class="mahjong-shadow">北</span></div>
+            <div class="ft">
+                <span class="mahjong-shadow">上</span>
+                <span id="resultn" class="win"></span>
+            </div>
             <div class="zd">
                 <span id="zhuangn" class="none-zhuang">庄</span>
                 <span id="diann" class="none-zhuang">点</span>
@@ -141,18 +170,9 @@
         </div>
         <div class="d-flex item">
             <div class="w-50">
-                <div class="ft tl"><span class="mahjong-shadow">西</span></div>
-                <div class="zd">
-                    <span id="zhuangw" class="none-zhuang">庄</span>
-                    <span id="dianw" class="none-zhuang">点</span>
-                    <span id="huw" class="none-zhuang">胡</span>
-                    <label class="dan-label" for="danw">蛋</label>
-                    <select name="danw" id="danw">
-                    </select>
-                </div>
-            </div>
-            <div class="w-50">
-                <div class="ft tr"><span class="mahjong-shadow">东</span></div>
+                <div class="ft tl">
+                    <span class="mahjong-shadow">左</span>
+                    <span id="resulte" class="win"></span></div>
                 <div class="zd">
                     <span id="zhuange" class="none-zhuang">庄</span>
                     <span id="diane" class="none-zhuang">点</span>
@@ -162,9 +182,25 @@
                     </select>
                 </div>
             </div>
+            <div class="w-50">
+                <div class="ft tr">
+                    <span id="resultw" class="win" style="position: relative;"></span>
+                    <span class="mahjong-shadow">右</span>
+                </div>
+                <div class="zd">
+                    <span id="zhuangw" class="none-zhuang">庄</span>
+                    <span id="dianw" class="none-zhuang">点</span>
+                    <span id="huw" class="none-zhuang">胡</span>
+                    <label class="dan-label" for="danw">蛋</label>
+                    <select name="danw" id="danw">
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="item" style="margin-top: 40px;">
-            <div class="ft"><span class="mahjong-shadow">南</span></div>
+            <div class="ft">
+                <span class="mahjong-shadow">下</span>
+                <span id="results" class="win"></span></div>
             <div class="zd">
                 <span id="zhuangs" class="none-zhuang">庄</span>
                 <span id="dians" class="none-zhuang">点</span>
@@ -200,12 +236,19 @@
                  对宝
             </label><input id="duibao" type="radio" name="bao" value="duibao" style="margin-left: -8px;height: 22px;    width: 60px;">
         </div>
-        <button id="calculate" class="calculate">计算</button>
+        <div style="position: relative;" class="d-flex">
+            <button id="reset" class="reset">重置</button>
+            <button id="calculate" class="calculate">计算</button>
+        </div>
+
     </div>
 
 </body>
 <script>
     $(document).ready(() => {
+        var zhuang, dian, hu;
+        $('input[name="bao"][value="nobao"]').prop('checked', true);
+
         for (let index = 0; index <= 25; index++) {
             $('#dann').append(`<option value="${index}">${index}</option>`);
             $('#dane').append(`<option value="${index}">${index}</option>`);
@@ -224,7 +267,35 @@
             }
         });
 
-        var zhuang, dian, hu;
+        $("#reset").click(() => {
+            zhuang = null;
+            dian = null;
+            hu = null;
+            $('#dians').addClass("none-zhuang").removeClass("zhuang");
+            $('#diane').addClass("none-zhuang").removeClass("zhuang")
+            $('#diann').addClass("none-zhuang").removeClass("zhuang")
+            $('#dianw').addClass("none-zhuang").removeClass("zhuang")
+            $('#zhuangs').addClass("none-zhuang").removeClass("zhuang");
+            $('#zhuange').addClass("none-zhuang").removeClass("zhuang")
+            $('#zhuangn').addClass("none-zhuang").removeClass("zhuang")
+            $('#zhuangw').addClass("none-zhuang").removeClass("zhuang")
+            $('#hus').addClass("none-zhuang").removeClass("zhuang");
+            $('#hue').addClass("none-zhuang").removeClass("zhuang")
+            $('#hun').addClass("none-zhuang").removeClass("zhuang")
+            $('#huw').addClass("none-zhuang").removeClass("zhuang")
+            $('input[name="bao"][value="nobao"]').prop('checked', true);
+            $(`#dane`).val(0)
+            $(`#danw`).val(0)
+            $(`#dans`).val(0)
+            $(`#dann`).val(0)
+            $("#rate").val(1)
+            $(`#resulte`).text(``);
+            $(`#results`).text(``);
+            $(`#resultw`).text(``);
+            $(`#resultn`).text(``);
+        })
+
+
         var palyer = ["w", "e", "s", "n"]
         var zhuangList = ["zhuangn", "zhuange", "zhuangs", "zhuangw"]
         var dianList = ["diann", "diane", "dians", "dianw"]
@@ -244,6 +315,16 @@
             $(`#hu${element}`).click(() => {
                 hu = switchZhuang(`hu${element}`, hu, huList)
             })
+        }
+
+        function setResult(result, name) {
+            if (result >= 0) {
+                $(`#result${name}`).text(`+${result}`);
+                $(`#result${name}`).addClass("win").removeClass("lose");
+            } else {
+                $(`#result${name}`).text(result);
+                $(`#result${name}`).addClass("lose").removeClass("win");
+            }
         }
 
         function switchZhuang(z, res, ls) {
@@ -269,28 +350,28 @@
         function getPlayers() {
             var res = [];
             var palyerW = {
-                name: "西",
+                name: "w",
                 dan: getDan('w'),
                 dian: dian == 'dianw',
                 zhuang: zhuang == 'zhuangw',
                 hu: hu == 'huw'
             }
             var palyerS = {
-                name: "南",
+                name: "s",
                 dan: getDan('s'),
                 dian: dian == 'dians',
                 zhuang: zhuang == 'zhuangs',
                 hu: hu == 'hus'
             }
             var palyerE = {
-                name: "东",
+                name: "e",
                 dan: getDan('e'),
                 dian: dian == 'diane',
                 zhuang: zhuang == 'zhuange',
                 hu: hu == 'hue'
             }
             var palyerN = {
-                name: "北",
+                name: "n",
                 dan: getDan('n'),
                 dian: dian == 'diann',
                 zhuang: zhuang == 'zhuangn',
@@ -384,11 +465,11 @@
 
                     total -= sc;
                 }
-                element.score = total;
-                message += `${element.name} ${total > 0 ? '赢' : '输'} ${Math.abs(total)} 分\n`;
+                setResult(total, element.name);
+                //message += `${element.name} ${total > 0 ? '赢' : '输'} ${Math.abs(total)} 分\n`;
             }
 
-            alert(message);
+            //alert(message);
         })
     })
 </script>
